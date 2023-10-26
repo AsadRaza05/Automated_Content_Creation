@@ -1,18 +1,18 @@
-import React from 'react';
-import './App.css'; 
 
-const App = () => {
+import {BrowserRouter,Route,Routes} from "react-router-dom";
+import Home from "./Home.js";
+import Scheduling from "./Scheduling.js";
+import Analytics from "./Analytics.js";
+
+export default function Routers() {
   return (
-    <>
-      <h1>Automated Content Creation</h1>
-      <div className="navbar">
-          <a href="/">Home</a>
-          <a href="/scheduling">Scheduling</a>
-          <a href="/analytics">Analytics</a>
-         
-      </div>
-    </>
-  );
-};
+      <BrowserRouter>
+          <Routes>
+              <Route exact path="/Home" element={<Home/>} />
+              <Route exact path="/Scheduling" element={<Scheduling/>} />
+              <Route exact path="/Analytics" element={<Analytics/>} />
+          </Routes>
+      </BrowserRouter>
+  ) ;
+}
 
-export default App;
