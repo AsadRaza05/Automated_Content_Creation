@@ -6,7 +6,7 @@ const Home = () => {
     <div>
       <h1>Automated Content Creation</h1>
       <div className="navbar">
-        <a href="/Home">Home</a>
+        <a href="/">Home</a>
         <a href="/Scheduling">Scheduling</a>
         <a href="/Analytics">Analytics</a>
       </div>

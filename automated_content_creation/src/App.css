@@ -97,3 +97,92 @@ img {
 .navbar a:hover {
   background-color: #555; /* Background color when hovering over links */
 }
+
+
+/* Scheduling.css */
+.scheduling-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 566px;
+  background-color: #f0f0f0; /* Background color of the page */
+}
+
+.form-container {
+  background-color: #fff; /* Background color of the form container */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container label {
+  font-weight: bold;
+}
+
+.form-container input[type="text"],
+.form-container input[type="file"],
+.form-container textarea {
+  width: 380px;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+/* .form-container button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+} */
+
+
+
+.form-container input[type="file"],
+.form-container input[type="datetime-local"] {
+  background-color: #f9f9f9;
+}
+
+.form-container .upload-option {
+  background-color: #f9f9f9; /* Background color of the "Upload Option" select box */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 5px 0;
+  outline: none;
+
+}
+
+.form-container button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.form-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
