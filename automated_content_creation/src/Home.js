@@ -1,15 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
+import Login from './login';
+import { useEffect } from 'react';
+import { gapi } from 'gapi-script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 import { faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { faUserGroup } from '@fortawesome/free-solid-svg-icons'
 import { faArrowUpRightDots } from '@fortawesome/free-solid-svg-icons'
-
 import "font-awesome/css/font-awesome.min.css";
 
+const clientID = "208368355986-5rrbo00fchtvkb2t1n9dpebv7lq0bilm.apps.googleusercontent.com";
+
 const Home = () => {
+
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientID: clientID,
+        scope: ""
+      })
+    };
+    gapi.load('client:auth2',start);
+  });
+
   return (
     <div>
 
@@ -26,7 +42,8 @@ const Home = () => {
         <p>
           <h1>Welcome to Your Video Scheduling Platform</h1>
           <h3>Schedule and analyze your videos with ease</h3>
-          <Link to="/scheduling" className="cta-button">Get Started</Link>
+          <Login />
+          {/* <Link to="/scheduling" className="cta-button">Get Started</Link> */}
         </p>
       </section>
 
@@ -101,7 +118,7 @@ const Home = () => {
       </section>
 
       <footer>
-        <p>Contact us: contact@example.com</p>
+        <p>Contact us: saifuhcl@gmail.com</p>
       </footer>
 
     </div>
