@@ -11,15 +11,20 @@ import "font-awesome/css/font-awesome.min.css";
 
 const Home = () => {
 
+  const logout = () => {
+    localStorage.clear()
+    window.location.reload()
+  }
+
 
   return (
     <div>
-
       <h1>Automated Content Creation</h1>
       <div className="navbar">
         <a href="/">Home</a>
         <a href="/Scheduling">Scheduling</a>
         <a href="/Analytics">Analytics</a>
+        <button onClick={logout}>Logout</button>
       </div>
 
     <div className='home-container'> 

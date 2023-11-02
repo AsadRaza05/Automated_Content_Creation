@@ -4,7 +4,7 @@ import './App.css';
 const Analytics = () => {
   return (
     <div>
-      <h1>Automated Content Creation Analytics</h1>
+      <h1>Automated Content Creation</h1>
       <div className="navbar">
         <a href="/">Home</a>
         <a href="/Scheduling">Scheduling</a>
