@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Link } from 'react-router-dom';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -120,3 +120,58 @@ const Home = () => {
 
 export default Home;
 
+
+// import React from 'react';
+// import { Link } from 'react-router-dom';
+// import './App.css';
+// import firebase, { provider } from './firebase'; // Import the Firebase configuration
+
+// const Home = () => {
+//   // Function to handle Google sign-in
+//   const handleGoogleSignIn = () => {
+//     firebase.auth().signInWithPopup(provider)
+//       .then((result) => {
+//         // User signed in successfully
+//         console.log('User signed in:', result.user.displayName);
+//       })
+//       .catch((error) => {
+//         // Handle sign-in error
+//         console.error('Sign-in error:', error);
+//       });
+//   };
+
+//   // Function to handle sign-out
+//   const handleSignOut = () => {
+//     firebase.auth().signOut()
+//       .then(() => {
+//         // User signed out
+//         console.log('User signed out');
+//       })
+//       .catch((error) => {
+//         // Handle sign-out error
+//         console.error('Sign-out error:', error);
+//       });
+//   };
+
+//   return (
+//     <div>
+//       <h1>Automated Content Creation</h1>
+//       <div className="navbar">
+//         <a href="/">Home</a>
+//         <a href="/Scheduling">Scheduling</a>
+//         <a href="/Analytics">Analytics</a>
+//         {firebase.auth().currentUser ? (
+//           <button onClick={handleSignOut}>Sign Out</button>
+//         ) : (
+//           <button onClick={handleGoogleSignIn}>Sign In with Google</button>
+//         )}
+//       </div>
+
+//       <div className="home-container">
+//         {/* Your existing content */}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Home;

@@ -130,3 +130,24 @@ const Scheduling = () => {
 }
 
 export default Scheduling;
+
+// import React from 'react';
+// import { Redirect } from 'react-router-dom';
+// import firebase from './Firebase'; // Import the Firebase configuration
+
+// const Scheduling = () => {
+//   if (!firebase.auth().currentUser) {
+//     // If the user is not authenticated, redirect to the Home page
+//     return <Redirect to="/" />;
+//   }
+
+//   // Render the Scheduling component for authenticated users
+//   return (
+//     <div>
+//       {/* Your Scheduling component content */}
+//     </div>
+//   );
+// };
+
+// export default Scheduling;
+

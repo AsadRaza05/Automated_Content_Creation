@@ -308,3 +308,46 @@ nav li {
   color: #fff;
   padding: 10px;
 }
+
+/* Login.css */
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f3f3f3;
+}
+
+.login-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.login-container p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.login-container button {
+  padding: 10px 20px;
+  background-color: #0077FF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.login-container button:hover {
+  background-color: #0055CC;
+}
+
+.login-container a {
+  text-decoration: none;
+  color: #0077FF;
+  font-weight: bold;
+  font-size: 16px;
+}
