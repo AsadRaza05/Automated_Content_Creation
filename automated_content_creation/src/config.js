@@ -1,8 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {getAuth,GoogleAuthProvider} from "firebase/auth";
 
-// import { getAnalytics } from "firebase/analytics";
-
 const firebaseConfig = {
   apiKey: "AIzaSyB8rkaCeS8GYwXA-l5rdfDUe-cbt7frZVg",
   authDomain: "automatedcontentcreation.firebaseapp.com",

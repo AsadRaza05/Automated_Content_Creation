@@ -7,11 +7,27 @@ import { faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { faUserGroup } from '@fortawesome/free-solid-svg-icons'
 import { faArrowUpRightDots } from '@fortawesome/free-solid-svg-icons'
 import "font-awesome/css/font-awesome.min.css";
+// import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 
 const Home = () => {
 
+  
+  const location = useLocation();
+  // const userEmail = location.state?.userEmail || '';
+  const userEmail = location.state?.userEmail || localStorage.getItem('userEmail') || '';
+
+
+
   const navigate = useNavigate(); 
+
+  
+  const navigateToScheduling = () => {
+    localStorage.setItem('userEmail', userEmail);
+    navigate('/Scheduling');
+  };
+
   const logout = () => {
     localStorage.clear()
     navigate("/");
@@ -25,7 +41,7 @@ const Home = () => {
       <h1>Automated Content Creation</h1>
       <div className="navbar">
         <a href="/Home">Home</a>
-        <a href="/Scheduling">Scheduling</a>
+        <a href="/Scheduling" onClick={navigateToScheduling}>Scheduling</a>
         <a href="/Analytics">Analytics</a>
         <button  className="logout-button" onClick={logout}>Logout</button>
       </div>
@@ -34,9 +50,10 @@ const Home = () => {
 
       <section className="hero-section">
         <p>
+        {/* <p>User Email: {userEmail}</p> */}
           <h1>Welcome to Your Video Scheduling Platform</h1>
           <h3>Schedule and analyze your videos with ease</h3>
-          <Link to="/scheduling" className="cta-button">Get Started</Link>
+          <Link to="/scheduling" onClick={navigateToScheduling} className="cta-button">Get Started</Link>
         </p>
       </section>
 
@@ -65,15 +82,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* <section className="benefits">
-        <h1>Benefits</h1>
-        <ul>
-          <li>Effortless video scheduling</li>
-          <li>Detailed video analytics</li>
-          <li>User-friendly interface</li>
-          <li>Increased viewer engagement</li>
-        </ul>
-      </section> */}
 
       <section className="benefits">
         <h1>Benefits</h1>
@@ -124,57 +132,3 @@ const Home = () => {
 export default Home;
 
 
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-// import './App.css';
-// import firebase, { provider } from './firebase'; // Import the Firebase configuration
-
-// const Home = () => {
-//   // Function to handle Google sign-in
-//   const handleGoogleSignIn = () => {
-//     firebase.auth().signInWithPopup(provider)
-//       .then((result) => {
-//         // User signed in successfully
-//         console.log('User signed in:', result.user.displayName);
-//       })
-//       .catch((error) => {
-//         // Handle sign-in error
-//         console.error('Sign-in error:', error);
-//       });
-//   };
-
-//   // Function to handle sign-out
-//   const handleSignOut = () => {
-//     firebase.auth().signOut()
-//       .then(() => {
-//         // User signed out
-//         console.log('User signed out');
-//       })
-//       .catch((error) => {
-//         // Handle sign-out error
-//         console.error('Sign-out error:', error);
-//       });
-//   };
-
-//   return (
-//     <div>
-//       <h1>Automated Content Creation</h1>
-//       <div className="navbar">
-//         <a href="/">Home</a>
-//         <a href="/Scheduling">Scheduling</a>
-//         <a href="/Analytics">Analytics</a>
-//         {firebase.auth().currentUser ? (
-//           <button onClick={handleSignOut}>Sign Out</button>
-//         ) : (
-//           <button onClick={handleGoogleSignIn}>Sign In with Google</button>
-//         )}
-//       </div>
-
-//       <div className="home-container">
-//         {/* Your existing content */}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Home;

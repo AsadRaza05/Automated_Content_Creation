@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
-import './App.css'; // Import the CSS file
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Scheduling = () => {
+  const location = useLocation();
+  const [userEmail, setUserEmail] = useState('');
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -10,14 +13,14 @@ const Scheduling = () => {
   const [scheduledTime, setScheduledTime] = useState('');
   const [uploadOption, setUploadOption] = useState('now');
 
-  const navigate = useNavigate(); 
-  const logout = () => {
-    localStorage.clear()
-    navigate("/");
-    window.location.reload()
+  const navigate = useNavigate();
 
-  }
+  useEffect(() => {
+    const userEmailFromState = location.state?.userEmail;
+    setUserEmail(userEmailFromState || localStorage.getItem('userEmail') || '');
+  }, [location.state]);
 
+  const videoApiLink = `https://api.seniorproject.xyz/api/videos/${userEmail}`;
 
   const handleAuthorChange = (event) => {
     setAuthor(event.target.value);
@@ -43,17 +46,27 @@ const Scheduling = () => {
     setUploadOption(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle the form submission based on uploadOption
-    console.log('Author:', author);
-    console.log('Title:', title);
-    console.log('Description:', description);
-    console.log('Video File:', videoFile);
-    console.log('Scheduled Time:', scheduledTime);
-    console.log('Upload Option:', uploadOption);
-  };
 
+    try {
+      const formData = new FormData();
+      formData.append('author', author);
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('videoFile', videoFile);
+      formData.append('scheduledTime', scheduledTime);
+      formData.append('uploadOption', uploadOption);
+
+      const response = await axios.post(videoApiLink, formData);
+
+      console.log('API response:', response.data);
+
+      navigate('/Home');
+    } catch (error) {
+      console.error('Error posting form data:', error);
+    }
+  };
 
   return (
     <div>
@@ -62,103 +75,80 @@ const Scheduling = () => {
         <a href="/Home">Home</a>
         <a href="/Scheduling">Scheduling</a>
         <a href="/Analytics">Analytics</a>
-        <button  className="logout-button" onClick={logout}>Logout</button>
+        <button className="logout-button" onClick={() => navigate("/")}>Logout</button>
       </div>
-    
-    <div className="scheduling-container">
-      <div className="form-container">
-        <h2>Video Scheduling</h2>
-        <form>
-          <div>
-            <label>Author:</label>
-            <input
-              type="text"
-              value={author}
-              onChange={handleAuthorChange}
-              required
-            />
-          </div>
 
-          <div>
-            <label>Title:</label>
-            <input
-              type="text"
-              value={title}
-              onChange={handleTitleChange}
-              required
-            />
-          </div>
-
-          <div>
-            <label>Description:</label>
-            <textarea
-              value={description}
-              onChange={handleDescriptionChange}
-              required
-            />
-          </div>
-
-          <div>
-            <label>Choose Video:</label>
-            <input
-              type="file"
-              accept=".mp4, .mov, .avi"
-              onChange={handleVideoFileChange}
-              required
-            />
-          </div>
-
-          {/* <button type="button" onClick={handleUploadNow}>Upload Now</button>
-          <button type="button" onClick={handleUploadLater}>Upload Later</button> */}
-
-          <div>
-            <label>Upload Option:</label>
-            <select onChange={handleUploadOptionChange} value={uploadOption}>
-              <option value="now">Upload Now</option>
-              <option value="later">Upload Later</option>
-            </select>
-          </div>
-
-          {uploadOption === 'later' && (
+      <div className="scheduling-container">
+        <div className="form-container">
+          <h2>Video Scheduling</h2>
+          <form onSubmit={handleSubmit}>
             <div>
-              <label>Scheduled Time:</label>
+              <label>Author:</label>
+              {/* <p>User Email: {userEmail}</p> */}
               <input
-                type="datetime-local"
-                value={scheduledTime}
-                onChange={handleScheduledTimeChange}
+                type="text"
+                value={author}
+                onChange={handleAuthorChange}
                 required
               />
             </div>
-          )}
 
-          <button type="submit">Submit</button>
+            <div>
+              <label>Title:</label>
+              <input
+                type="text"
+                value={title}
+                onChange={handleTitleChange}
+                required
+              />
+            </div>
 
-        </form>
+            <div>
+              <label>Description:</label>
+              <textarea
+                value={description}
+                onChange={handleDescriptionChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label>Choose Video:</label>
+              <input
+                type="file"
+                accept=".mp4, .mov, .avi"
+                onChange={handleVideoFileChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label>Upload Option:</label>
+              <select onChange={handleUploadOptionChange} value={uploadOption}>
+                <option value="now">Upload Now</option>
+                <option value="later">Upload Later</option>
+              </select>
+            </div>
+
+            {uploadOption === 'later' && (
+              <div>
+                <label>Scheduled Time:</label>
+                <input
+                  type="datetime-local"
+                  value={scheduledTime}
+                  onChange={handleScheduledTimeChange}
+                  required
+                />
+              </div>
+            )}
+
+            <button type="submit">Submit</button>
+
+          </form>
+        </div>
       </div>
     </div>
-    </div>  
   );
 }
 
 export default Scheduling;
-
-// import React from 'react';
-// import { Redirect } from 'react-router-dom';
-// import firebase from './Firebase'; // Import the Firebase configuration
-
-// const Scheduling = () => {
-//   if (!firebase.auth().currentUser) {
-//     // If the user is not authenticated, redirect to the Home page
-//     return <Redirect to="/" />;
-//   }
-
-//   // Render the Scheduling component for authenticated users
-//   return (
-//     <div>
-//       {/* Your Scheduling component content */}
-//     </div>
-//   );
-// };
-
-// export default Scheduling;
-

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { signInWithPopup } from "firebase/auth";
 import Home from "./Home";
-import firebase, { provider } from "./firebase"; // Import the Firebase configuration
+import { auth, provider } from './config';
+import firebase from "./Firebaseauth"; 
 
 function Firebase() {
   const [value, setValue] = useState('');
