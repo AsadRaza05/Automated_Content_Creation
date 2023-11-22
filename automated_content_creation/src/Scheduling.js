@@ -2,152 +2,149 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import logos from '../src/images/logos.png';
+import {MenuItem, FormControl, InputLabel, Select,} from "@mui/material";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { format, parse, addHours } from 'date-fns';
+
+
 
 const Scheduling = () => {
   const location = useLocation();
   const [userEmail, setUserEmail] = useState('');
-  const [author, setAuthor] = useState('');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [videoFile, setVideoFile] = useState(null);
-  const [scheduledTime, setScheduledTime] = useState('');
-  const [uploadOption, setUploadOption] = useState('now');
+  const [videoType, setvideoType] = useState(1)
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [scheduleResponse, setscheduleResponse] = useState([])
 
   const navigate = useNavigate();
 
+
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        
+        const { data } = await axios.get(`http://localhost:5000/api/video-schedule/user_token_155`);
+        setscheduleResponse([data]);
+        console.log(scheduleResponse)
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    
+
     const userEmailFromState = location.state?.userEmail;
     setUserEmail(userEmailFromState || localStorage.getItem('userEmail') || '');
+    fetchData()
   }, [location.state]);
 
-  const videoApiLink = `https://api.seniorproject.xyz/api/videos/${userEmail}`;
-
-  const handleAuthorChange = (event) => {
-    setAuthor(event.target.value);
-  };
-
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
-
-  const handleVideoFileChange = (event) => {
-    setVideoFile(event.target.files[0]);
-  };
-
-  const handleScheduledTimeChange = (event) => {
-    setScheduledTime(event.target.value);
-  };
-
-  const handleUploadOptionChange = (event) => {
-    setUploadOption(event.target.value);
-  };
+  
+  useEffect(() => {
+    console.log(scheduleResponse);
+  }, [scheduleResponse]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const formData = new FormData();
-      formData.append('author', author);
-      formData.append('title', title);
-      formData.append('description', description);
-      formData.append('videoFile', videoFile);
-      formData.append('scheduledTime', scheduledTime);
-      formData.append('uploadOption', uploadOption);
-
-      const response = await axios.post(videoApiLink, formData);
+      //this will post the video and send the data in the body of the request
+      const videoApiLink = `http://localhost:5000/api/video-schedules/user_token_155`;
+      const response = await axios.put(videoApiLink, {videoType,selectedTime});
 
       console.log('API response:', response.data);
 
-      navigate('/Home');
+      // navigate('/Home');
+      console.log(videoType)
+      console.log(selectedTime)
     } catch (error) {
       console.error('Error posting form data:', error);
     }
   };
 
   return (
+    
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      
     <div>
-      <h1>Automated Content Creation</h1>
+      {/* header */}
       <div className="navbar">
-        <a href="/Home">Home</a>
-        <a href="/Scheduling">Scheduling</a>
-        <a href="/Analytics">Analytics</a>
-        <button className="logout-button" onClick={() => navigate("/")}>Logout</button>
+        <div className="logo">
+          <img src={logos} alt="Girl in a jacket" ></img>
+        </div>
+        <div className="nav-content">
+          <a href="/Home">Home</a>
+          <a href="/Scheduling">Scheduling</a>
+          <a href="/Analytics">Analytics</a>
+          <button className="logout-button" onClick={() => navigate("/")}>Logout</button>
+        </div>
       </div>
+
 
       <div className="scheduling-container">
         <div className="form-container">
           <h2>Video Scheduling</h2>
           <form onSubmit={handleSubmit}>
             <div>
-              <label>Author:</label>
-              {/* <p>User Email: {userEmail}</p> */}
-              <input
-                type="text"
-                value={author}
-                onChange={handleAuthorChange}
-                required
+              <label>Video type</label>
+              <FormControl fullWidth>
+                
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={videoType}
+                  onChange={(event) => {
+                    setvideoType(event.target.value);
+                  }}
+                >
+                  <MenuItem value={'AskReddit'}>Ask Reddit</MenuItem>
+                  <MenuItem value={'CrimeStories'}>Crime Stories</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+
+            <div className='time-pick'>
+              <label>Time:</label>
+            </div>
+            <TimePicker
+                className='time-pick'
+                value={selectedTime}
+                onChange={(newTime) => {
+                  // Use the format functdion to extract hh:mm from newTime
+                  
+                  console.log(newTime)
+                  const strTime = String(newTime.$H)+":"+String(newTime.$M)
+                  const parsedDate = parse(strTime, 'HH:mm', new Date());
+                  const formattedTime = format(parsedDate, 'HH:mm');
+                  console.log(formattedTime)
+                  setSelectedTime(formattedTime);
+                }}
               />
-            </div>
 
-            <div>
-              <label>Title:</label>
-              <input
-                type="text"
-                value={title}
-                onChange={handleTitleChange}
-                required
-              />
-            </div>
-
-            <div>
-              <label>Description:</label>
-              <textarea
-                value={description}
-                onChange={handleDescriptionChange}
-                required
-              />
-            </div>
-
-            <div>
-              <label>Choose Video:</label>
-              <input
-                type="file"
-                accept=".mp4, .mov, .avi"
-                onChange={handleVideoFileChange}
-                required
-              />
-            </div>
-
-            <div>
-              <label>Upload Option:</label>
-              <select onChange={handleUploadOptionChange} value={uploadOption}>
-                <option value="now">Upload Now</option>
-                <option value="later">Upload Later</option>
-              </select>
-            </div>
-
-            {uploadOption === 'later' && (
-              <div>
-                <label>Scheduled Time:</label>
-                <input
-                  type="datetime-local"
-                  value={scheduledTime}
-                  onChange={handleScheduledTimeChange}
-                  required
-                />
-              </div>
-            )}
-
-            <button type="submit">Submit</button>
+           
+            <button type="submit">Schedule</button>
 
           </form>
         </div>
+        <div className='schedulePopulaterHeading'>
+          <h1>Current Schedule</h1>
+        </div>
+        {scheduleResponse.map((schedule) => (
+          <div key={schedule._id} className='schedulePopulater'>
+            {schedule.videos.map((video) => (
+              <div key={video._id} className='schedulePopulaterBoxLeft'>
+                <div>{video.videoType}</div>
+                <div>{video.time}</div>
+              </div>
+            ))}
+            
+          </div>
+        ))}
       </div>
     </div>
+    </LocalizationProvider>
   );
 }
 

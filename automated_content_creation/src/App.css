@@ -12,6 +12,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.logo img {
+  width: 100%; /* Set a max height for your logo */
+}
 
 .App-header {
   background-color: #282c34;
@@ -79,14 +82,16 @@ h1{
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-
+.logo{
+  max-width: 100px;
+}
 
 .navbar {
   background-color: #333; /* Background color for the navigation bar */
-  color: #fff; /* Text color */
   display: flex;
-  justify-content: space-around;
-  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding:0% 2% 0% 0%;
 }
 
 .navbar a {
@@ -94,16 +99,22 @@ h1{
   color: #fff;
   font-size: 16px;
   padding: 5px 10px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .navbar a:hover {
   background-color: #555; /* Background color when hovering over links */
 }
 
+.time-pick{
+  position: relative;
+  width: auto;
+}
 
 /* Scheduling.css */
 .scheduling-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 566px;
@@ -111,6 +122,7 @@ h1{
 }
 
 .form-container {
+  position: relative;
   background-color: #fff; /* Background color of the form container */
   padding: 20px;
   border-radius: 8px;
@@ -423,4 +435,34 @@ Login.css */
 
 .logout-button:hover {
   background-color: #d32f2f; /* Darker red background color on hover */
+}
+
+.schedulePopulaterHeading{
+  margin-top:3% ;
+}
+
+
+.schedulePopulater{
+  display:flex;
+  flex-direction: row;
+}
+
+.schedulePopulaterBoxLeft{
+  background-color: #555;
+  color: white;
+  width: 100px;
+  border-radius: .5rem;
+  padding: 20px;
+  text-align: center;
+  margin: 2px;
+}
+.schedulePopulaterBoxRight{
+  background-color: #555;
+  color: white;
+  min-width: 300px;
+  width: auto;
+  border-radius: .5rem;
+  padding: 20px;
+  text-align: left;
+  margin: 2px;
 }
