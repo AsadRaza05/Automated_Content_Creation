@@ -14,18 +14,18 @@ import { format, parse, addHours } from 'date-fns';
 const Scheduling = () => {
   const location = useLocation();
   const [userEmail, setUserEmail] = useState('');
-  const [videoType, setvideoType] = useState(1)
+  const [videoType, setvideoType] = useState('AskReddit')
   const [selectedTime, setSelectedTime] = useState(null);
   const [scheduleResponse, setscheduleResponse] = useState([])
 
   const navigate = useNavigate();
-
+  const storedEmail = localStorage.getItem('email')
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         
-        const { data } = await axios.get(`http://localhost:5000/api/video-schedule/user_token_155`);
+        const { data } = await axios.get(`http://localhost:5000/api/video-schedules/${storedEmail}`);
         setscheduleResponse([data]);
         console.log(scheduleResponse)
         
@@ -39,6 +39,9 @@ const Scheduling = () => {
     const userEmailFromState = location.state?.userEmail;
     setUserEmail(userEmailFromState || localStorage.getItem('userEmail') || '');
     fetchData()
+    
+    console.log(storedEmail)
+    
   }, [location.state]);
 
   
@@ -51,8 +54,9 @@ const Scheduling = () => {
 
     try {
       //this will post the video and send the data in the body of the request
-      const videoApiLink = `http://localhost:5000/api/video-schedules/user_token_155`;
-      const response = await axios.put(videoApiLink, {videoType,selectedTime});
+      const time = selectedTime
+      const videoApiLink = `http://localhost:5000/api/video-schedules/${storedEmail}`;
+      const response = await axios.put(videoApiLink, {videoType,time});
 
       console.log('API response:', response.data);
 
@@ -72,7 +76,7 @@ const Scheduling = () => {
       {/* header */}
       <div className="navbar">
         <div className="logo">
-          <img src={logos} alt="Girl in a jacket" ></img>
+          <img src={logos} alt="ACC" ></img>
         </div>
         <div className="nav-content">
           <a href="/Home">Home</a>
