@@ -25,8 +25,8 @@ function Login() {
 
   return (
     <div className="login-container">
-      <h1>Login to Your Account</h1>
-      <p>Welcome to Automated Content Creation. Sign in to get started.</p>
+      <h1>Automatic Content Creator</h1>
+      <p>We save your time by Editing, scheduling, and posting content for you.</p>
       <button onClick={handleClick}>Login</button>
     </div>
   );

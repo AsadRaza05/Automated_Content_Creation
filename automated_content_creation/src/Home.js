@@ -9,6 +9,7 @@ import { faArrowUpRightDots } from '@fortawesome/free-solid-svg-icons'
 import "font-awesome/css/font-awesome.min.css";
 // import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import logos from '../src/images/logos.png';
 
 
 const Home = () => {
@@ -38,23 +39,31 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Automated Content Creation</h1>
+      {/* header */}
       <div className="navbar">
-        <a href="/Home">Home</a>
-        <a href="/Scheduling" onClick={navigateToScheduling}>Scheduling</a>
-        <a href="/Analytics">Analytics</a>
-        <button  className="logout-button" onClick={logout}>Logout</button>
+        <div className="logo">
+          <img src={logos} alt="ACC" ></img>
+        </div>
+        <div className="nav-content">
+          <a href="/Home">Home</a>
+          <a href="/Scheduling">Scheduling</a>
+          <a href="/Analytics">Analytics</a>
+          <button className="logout-button" onClick={() => navigate("/")}>Logout</button>
+        </div>
       </div>
 
     <div className='home-container'> 
 
       <section className="hero-section">
-        <p>
-        {/* <p>User Email: {userEmail}</p> */}
-          <h1>Welcome to Your Video Scheduling Platform</h1>
-          <h3>Schedule and analyze your videos with ease</h3>
-          <Link to="/scheduling" onClick={navigateToScheduling} className="cta-button">Get Started</Link>
-        </p>
+      <div className="left-side-home">
+          
+          </div>
+          <div className="right-side-home">
+          {/* <p>User Email: {userEmail}</p> */}
+            <h1>Welcome to Your Video Scheduling Platform</h1>
+            <h3>Schedule and analyze your videos with ease</h3>
+            <Link to="/scheduling" onClick={navigateToScheduling} className="cta-button">Get Started</Link>
+          </div>
       </section>
 
       <section className="about-section">
