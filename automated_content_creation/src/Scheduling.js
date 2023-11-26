@@ -25,7 +25,7 @@ const Scheduling = () => {
     const fetchData = async () => {
       try {
         
-        const { data } = await axios.get(`http://localhost:5000/api/video-schedules/${storedEmail}`);
+        const { data } = await axios.get(`http://localhost:5000/api/video-schedule/${storedEmail}`);
         setscheduleResponse([data]);
         console.log(scheduleResponse)
         
